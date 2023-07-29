@@ -2,7 +2,8 @@ from torch.utils.data import Dataset
 from torchvision.transforms import transforms
 from torch.utils.data import DataLoader
 from evaluation import *
-from unetmode import *
+from unetmodel import *
+from segLoss import *
 from PIL import Image
 import torch
 
@@ -68,7 +69,7 @@ optimizer = torch.optim.Adam(model.parameters(), lr=learning_rate, weight_decay=
 
 scheduler = torch.optim.lr_scheduler.ReduceLROnPlateau(optimizer, mode='min', factor=0.8, patience=15, verbose=False,
                                                        threshold=0.0001, min_lr=0)  # 固定步长衰减
-criterion = torch.nn.CrossEntropyLoss()
+criterion = BCEDiceLoss()
 best = 0.
 besti = 0
 for epoch in range(num_epochs):
