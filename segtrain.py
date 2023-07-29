@@ -4,6 +4,7 @@ from torch.utils.data import DataLoader
 from evaluation import *
 from unetmodel import *
 from segLoss import *
+from unext import *
 from PIL import Image
 import torch
 
