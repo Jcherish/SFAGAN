@@ -18,8 +18,8 @@ import torchvision.utils as vutils
 parser = argparse.ArgumentParser()
 parser.add_argument('--dataroot', type=str, default='./datasets', help='path to datasets')
 parser.add_argument('--workers', type=int, help='number of data loading workers', default=2)
-parser.add_argument('--batch_size', type=int, default=64, help='inputs batch size')
-parser.add_argument('--img_size', type=int, default=64, help='the height / width of the inputs image to network')
+parser.add_argument('--batch_size', type=int, default=4, help='inputs batch size')
+parser.add_argument('--img_size', type=int, default=256, help='the height / width of the inputs image to network')
 parser.add_argument('--lr', type=float, default=0.0002, help='learning rate, default=0.0002')
 parser.add_argument('--beta1', type=float, default=0.5, help='beta1 for adam. default=0.5')
 parser.add_argument('--beta2', type=float, default=0.9, help='beta2 for adam. default=0.9')
@@ -84,7 +84,7 @@ class Generator(nn.Module):
     self.ngpu = ngpu
     self.main = nn.Sequential(
       # inputs is Z, going into a convolution
-      nn.ConvTranspose2d(100, 64 * 8, 4, 1, 0, bias=False),
+      nn.ConvTranspose2d(256, 64 * 8, 4, 1, 0, bias=False),
       nn.BatchNorm2d(64 * 8),
       nn.ReLU(True),
       # state size. (ngf*8) x 4 x 4
@@ -100,7 +100,7 @@ class Generator(nn.Module):
       nn.BatchNorm2d(64),
       nn.ReLU(True),
       # state size. (ngf) x 32 x 32
-      nn.ConvTranspose2d(64, 3, 4, 2, 1, bias=False),
+      nn.ConvTranspose2d(256, 2, 4, 2, 1, bias=False),
       nn.Tanh()
       # state size. (nc) x 64 x 64
     )
@@ -132,7 +132,7 @@ class Discriminator(nn.Module):
     self.ngpu = ngpu
     self.main = nn.Sequential(
       # inputs is (nc) x 64 x 64
-      nn.Conv2d(3, 64, 4, 2, 1, bias=False),
+      nn.Conv2d(2, 256, 4, 2, 1, bias=False),
       nn.LeakyReLU(0.2, inplace=True),
       # state size. (ndf) x 32 x 32
       nn.Conv2d(64, 64 * 2, 4, 2, 1, bias=False),
