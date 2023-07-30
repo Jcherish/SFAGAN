@@ -1,16 +1,9 @@
 import argparse
-from metrics import *
 import matplotlib.pyplot as plt
 from torch.utils.data import DataLoader
 import torch
-from torchvision import transforms
 import torch.nn as nn
-import torch.optim as optim
 from torch.autograd import Variable
-import numpy as np
-from torchvision.utils import save_image
-from skimage.metrics import structural_similarity
-
 ndf=32
 ngf=32
 class Discriminator(nn.Module):
