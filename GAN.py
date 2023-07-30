@@ -1,12 +1,12 @@
 import torch.nn as nn
 import torch.nn.functional as F
-
+import torch
 
 class Discriminator(nn.Module):
 
     def __init__(self):
         super(Discriminator, self).__init__()
-        self.fc1 = nn.Linear(1 * 28 * 28, 256)
+        self.fc1 = nn.Linear( 256 * 256, 256)
         self.drop1 = nn.Dropout(p=0.2)
         self.fc2 = nn.Linear(256, 128)
         self.drop2 = nn.Dropout(p=0.2)
